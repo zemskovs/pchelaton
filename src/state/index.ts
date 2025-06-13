@@ -20,6 +20,13 @@ export const gameState = proxy({
       gameState.stage = Stage.third;
     }
 
+    // if (newPoints === 10) {
+    //   gameState.stage = Stage.second;
+    // }
+    // if (newPoints === 25) {
+    //   gameState.stage = Stage.third;
+    // }
+
     // Простая случайная реакция
     const reactions = [
       "Гав-гав!",
