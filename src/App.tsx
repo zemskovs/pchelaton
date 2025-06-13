@@ -2,29 +2,34 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useSnapshot } from "valtio";
+import { state } from "./state";
+import { Stage } from "./types";
 
 export function App() {
-  const [points, setPoints] = useState(0);
-  const [stage, setStage] = useState("Щенок");
-  const [reaction, setReaction] = useState("Гав! Гладь меня ещё!");
+  const { points, stage, reaction } = useSnapshot(state);
 
-  const handleClick = () => {
-    const newPoints = points + 1;
-    setPoints(newPoints);
+  // const handleClick = () => {
+  //   const newPoints = points + 1;
+  //   state.points = newPoints;
 
-    if (newPoints === 10) setStage("Молодой пёс");
-    if (newPoints === 25) setStage("Взрослый ретривер");
+  //   if (newPoints === 10) {
+  //     state.stage = Stage.second;
+  //   }
+  //   if (newPoints === 25) {
+  //     state.stage = Stage.third;
+  //   }
 
-    // Простая случайная реакция
-    const reactions = [
-      "Гав-гав!",
-      "Мяу... ой, я пёс!",
-      "Хочу косточку!",
-      "Ты лучший друг!",
-      "Погладь меня ещё!",
-    ];
-    setReaction(reactions[Math.floor(Math.random() * reactions.length)]);
-  };
+  //   // Простая случайная реакция
+  //   const reactions = [
+  //     "Гав-гав!",
+  //     "Мяу... ой, я пёс!",
+  //     "Хочу косточку!",
+  //     "Ты лучший друг!",
+  //     "Погладь меня ещё!",
+  //   ];
+  //   state.reaction = reactions[Math.floor(Math.random() * reactions.length)];
+  // };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-yellow-50 p-4">
