@@ -1,4 +1,4 @@
-# bun-react-template
+# Pchelaton Golden Retriever Clicker
 
 To install dependencies:
 
