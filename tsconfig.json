@@ -11,7 +11,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["bun-types"]
   },
+  "include": ["src/**/*", "global.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

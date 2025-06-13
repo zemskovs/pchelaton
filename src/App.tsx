@@ -6,9 +6,12 @@ import { useSnapshot } from "valtio";
 import { state } from "./state";
 import { Stage } from "./types";
 
+import firstDog from "./images/1.png";
+
 export function App() {
   const { points, stage, reaction } = useSnapshot(state);
 
+  // Если что логика скрыта
   // const handleClick = () => {
   //   const newPoints = points + 1;
   //   state.points = newPoints;
@@ -31,6 +34,8 @@ export function App() {
   //   state.reaction = reactions[Math.floor(Math.random() * reactions.length)];
   // };
 
+  const handleClick = () => {};
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-yellow-50 p-4">
       <h1 className="text-4xl font-bold text-amber-700 mb-4">
@@ -40,7 +45,7 @@ export function App() {
       <Card className="w-80 text-center">
         <CardContent className="p-4">
           <motion.img
-            src="https://place-puppy.com/300x300"
+            src={firstDog}
             alt="golden retriever"
             className="rounded-xl mb-4"
             initial={{ scale: 0.8 }}
