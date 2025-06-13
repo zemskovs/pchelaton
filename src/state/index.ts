@@ -13,10 +13,10 @@ export const gameState = proxy({
     // Показываем анимацию +1
     gameState.showPlusOne = true;
 
-    if (newPoints === 10 && statsStore.agility === 10) {
+    if (newPoints === 10 && gameState.agility === 1) {
       gameState.stage = Stage.second;
     }
-    if (newPoints === 25 && statsStore.intelligence === 20) {
+    if (newPoints === 25 && gameState.intelligence === 2) {
       gameState.stage = Stage.third;
     }
 
@@ -30,6 +30,16 @@ export const gameState = proxy({
     ];
     gameState.reaction =
       reactions[Math.floor(Math.random() * reactions.length)];
+  },
+
+  intelligence: 0,
+  agility: 0,
+
+  trainStat: (stat: "intelligence" | "agility") => {
+    if (gameState.points >= 5) {
+      gameState.points -= 5;
+      gameState[stat] += 1;
+    }
   },
 });
 
@@ -69,14 +79,4 @@ export const shopState = proxy({
   },
 });
 
-export const statsStore = proxy({
-  intelligence: 0,
-  agility: 0,
-
-  trainStat: (stat: "intelligence" | "agility") => {
-    if (gameState.points >= 5) {
-      gameState.points -= 5;
-      statsStore[stat] += 1;
-    }
-  },
-});
+export const statsStore = proxy({});
