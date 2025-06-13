@@ -13,10 +13,10 @@ export const gameState = proxy({
     // Показываем анимацию +1
     gameState.showPlusOne = true;
 
-    if (newPoints === 10) {
+    if (newPoints === 10 && statsStore.agility === 10) {
       gameState.stage = Stage.second;
     }
-    if (newPoints === 25) {
+    if (newPoints === 25 && statsStore.intelligence === 20) {
       gameState.stage = Stage.third;
     }
 
