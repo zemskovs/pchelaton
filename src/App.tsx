@@ -1,44 +1,24 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useSnapshot } from "valtio";
-import { state } from "./state";
-import { Stage } from "./types";
 
+import { gameState, shopState, statsStore } from "./state";
 import { IMG_MAP } from "./constants";
 import { PlusOneAnimation } from "./components/ui/animation";
+import { UpgradeShop } from "./components/ui/shop";
+import { StatBar } from "./components/ui/stats";
 
 export function App() {
-  const { points, stage, reaction, showPlusOne } = useSnapshot(state);
+  const { points, stage, reaction, showPlusOne } = useSnapshot(gameState);
+  useSnapshot(shopState);
 
   const handleClick = () => {
-    const newPoints = points + 1;
-    state.points = newPoints;
-
-    // Показываем анимацию +1
-    state.showPlusOne = true;
-
-    if (newPoints === 10) {
-      state.stage = Stage.second;
-    }
-    if (newPoints === 25) {
-      state.stage = Stage.third;
-    }
-
-    // Простая случайная реакция
-    const reactions = [
-      "Гав-гав!",
-      "Мяу... ой, я пёс!",
-      "Хочу косточку!",
-      "Ты лучший друг!",
-      "Погладь меня ещё!",
-    ];
-    state.reaction = reactions[Math.floor(Math.random() * reactions.length)];
+    gameState.onClick();
   };
 
   const handlePlusOneComplete = () => {
-    state.showPlusOne = false;
+    gameState.showPlusOne = false;
   };
 
   return (
@@ -51,7 +31,7 @@ export function App() {
         <CardContent className="p-4 relative">
           <div className="relative">
             <motion.img
-              src={IMG_MAP[state.stage]}
+              src={IMG_MAP[gameState.stage]}
               alt="golden retriever"
               className="rounded-xl mb-4"
               animate={{
@@ -73,16 +53,34 @@ export function App() {
           </div>
           <h2 className="text-xl font-semibold mb-2">Стадия: {stage}</h2>
           <p className="text-gray-700 mb-2">Очки счастья: {points}</p>
+
+          <StatBar label="Интеллект" value={statsStore.intelligence} />
+          <StatBar label="Ловкость" value={statsStore.agility} />
+
           <p className="italic text-sm text-gray-500 mb-4">"{reaction}"</p>
 
           <Button
-            onClick={handleClick}
-            className="bg-amber-500 hover:bg-amber-600 text-white"
+            onClick={() => statsStore.trainStat("intelligence")}
+            className="bg-blue-500 hover:bg-blue-600 text-white w-full mt-2"
+            disabled={points < 5}
           >
-            Погладить 🐾
+            Тренировать интеллект (-5 🦴)
+          </Button>
+          <Button
+            onClick={() => statsStore.trainStat("agility")}
+            className="bg-green-500 hover:bg-green-600 text-white w-full mt-2"
+            disabled={points < 5}
+          >
+            Тренировать ловкость (-5 🦴)
           </Button>
         </CardContent>
       </Card>
+
+      <UpgradeShop
+        upgrades={shopState.upgrades}
+        onBuy={shopState.buyUpgrade}
+        points={points}
+      />
     </main>
   );
 }
